@@ -21,15 +21,13 @@ SET time_zone = "+00:00";
 -- Cơ sở dữ liệu: `test`
 --
 
-DELIMITER $$
 --
--- Các hàm
+-- Các hàm (Bạn nên chạy phần này riêng nếu import toàn bộ file thất bại)
 --
-CREATE DEFINER=`root`@`localhost` FUNCTION `SPLIT_STR` (`x` VARCHAR(255), `delim` VARCHAR(12), `pos` INT) RETURNS VARCHAR(255) CHARSET utf8mb4 COLLATE utf8mb4_general_ci  RETURN REPLACE(SUBSTRING(SUBSTRING_INDEX(x, delim, pos),
-       CHAR_LENGTH(SUBSTRING_INDEX(x, delim, pos -1)) + 1),
-       delim, "")$$
 
-DELIMITER ;
+CREATE DEFINER=`root`@`localhost` FUNCTION `SPLIT_STR` (`x` VARCHAR(255), `delim` VARCHAR(12), `pos` INT) RETURNS VARCHAR(255) CHARSET utf8mb4 COLLATE utf8mb4_general_ci DETERMINISTIC RETURN REPLACE(SUBSTRING(SUBSTRING_INDEX(x, delim, pos),
+    CHAR_LENGTH(SUBSTRING_INDEX(x, delim, pos -1)) + 1),
+    delim, "");
 
 -- --------------------------------------------------------
 
@@ -50,10 +48,10 @@ CREATE TABLE `banggia_dichvu` (
 --
 
 INSERT INTO `banggia_dichvu` (`id`, `category_dichvu`, `title`, `author`, `status`) VALUES
-(1, 1, 'Tiểu Đội Sát Thủ( yêu cầu : nm 100k ki , xd 100k hp chưa item , td 5k sd có item )', '{\"server\":[1,2,3,4,5,6,7,8,9,10],\"gia\":{\"1\":200,\"2\":200,\"3\":200,\"4\":200,\"5\":200,\"6\":200,\"7\":200,\"8\":200,\"9\":200,\"10\":200}}', 1),
-(2, 1, 'Tiêu Diệt Fide ( yêu cầu : nm 100k ki , xd 100k hp chưa item , td 5k sd có item )', '{\"server\":[1,2,3,4,5,6,7,8,9,10],\"gia\":{\"1\":200,\"2\":200,\"3\":200000,\"4\":200,\"5\":200,\"6\":200,\"7\":200,\"8\":200,\"9\":200,\"10\":200}}', 1),
-(3, 1, 'Apk 19 20( yêu cầu : nm 100k ki , xd 100k hp chưa item , td 5k sd có item )', '{\"server\":[1,2,3,4,5,6,7,8],\"gia\":{\"1\":200000,\"2\":200,\"3\":200,\"4\":200,\"5\":200,\"6\":200,\"7\":200,\"8\":200}}', 1),
-(13, 1, '123', '{\"gia\":{\"123\":\"123\"},\"server\":[123]}', 1);
+(1, 1, 'Tiểu Đội Sát Thủ( yêu cầu : nm 100k ki , xd 100k hp chưa item , td 5k sd có item )', '{"server":[1,2,3,4,5,6,7,8,9,10],"gia":{"1":200,"2":200,"3":200,"4":200,"5":200,"6":200,"7":200,"8":200,"9":200,"10":200}}', 1),
+(2, 1, 'Tiêu Diệt Fide ( yêu cầu : nm 100k ki , xd 100k hp chưa item , td 5k sd có item )', '{"server":[1,2,3,4,5,6,7,8,9,10],"gia":{"1":200,"2":200,"3":200000,"4":200,"5":200,"6":200,"7":200,"8":200,"9":200,"10":200}}', 1),
+(3, 1, 'Apk 19 20( yêu cầu : nm 100k ki , xd 100k hp chưa item , td 5k sd có item )', '{"server":[1,2,3,4,5,6,7,8],"gia":{"1":200000,"2":200,"3":200,"4":200,"5":200,"6":200,"7":200,"8":200}}', 1),
+(13, 1, '123', '{"gia":{"123":"123"},"server":[123]}', 1);
 
 -- --------------------------------------------------------
 
@@ -141,7 +139,7 @@ CREATE TABLE `category_banthe` (
 
 INSERT INTO `category_banthe` (`id`, `nhamang`, `menhgia`, `ck`, `status`) VALUES
 (1, 'VIETTEL', '10000\n20000\n30000\n50000\n100000\n200000\n500000\n1000000', '1\n2\n3\n4\n5\n6\n7\n10', 1),
-(2, 'VINAPHONE', '10000\n20000\n30000\n50000\n100000\n200000\n500000\n1000000', '1\r\n2\r\n3\r\n4\r\n5\r\n6\r\n7\r\n8', 1),
+(2, 'VINAPHONE', '10000\r\n20000\r\n30000\r\n50000\r\n100000\r\n200000\r\n500000\r\n1000000', '1\r\n2\r\n3\r\n4\r\n5\r\n6\r\n7\r\n8', 1),
 (3, 'MOBIPHONE', '10000\r\n20000', '1\n2', 1);
 
 -- --------------------------------------------------------
@@ -167,8 +165,8 @@ CREATE TABLE `category_dichvu` (
 --
 
 INSERT INTO `category_dichvu` (`id`, `stt`, `title`, `mota`, `img`, `num_sell`, `server`, `slug`, `status`) VALUES
-(1, 3, 'LÀM NHIỆM VỤ THUÊ NGỌC RỒNG', '<p>VUI LÒNG ĐỂ 1 NGỌC TRONG TÀI KHOẢN TRƯỚC KHI MUA<br></p>', 'https://123nick.vn/upload-usr/images/W7BSg314nb_1629517925.gif', 13, '[\"1\",\"2\",\"3\",\"4\",\"5\",\"6\",\"7\",\"8\",\"9\",\"10\"]', 'lamnhiemvuthuengocrong', 1),
-(9, 2, 'ÚP SỨC MẠNH SƯ PHỤ', 'MÔ TẢ DỊCH VỤ', 'https://i.imgur.com/VlTphCZ.gif', 0, '[\"\"]', 'up-suc-manh-su-phu', 1);
+(1, 3, 'LÀM NHIỆM VỤ THUÊ NGỌC RỒNG', '<p>VUI LÒNG ĐỂ 1 NGỌC TRONG TÀI KHOẢN TRƯỚC KHI MUA<br></p>', 'https://123nick.vn/upload-usr/images/W7BSg314nb_1629517925.gif', 13, '["1","2","3","4","5","6","7","8","9","10"]', 'lamnhiemvuthuengocrong', 1),
+(9, 2, 'ÚP SỨC MẠNH SƯ PHỤ', 'MÔ TẢ DỊCH VỤ', 'https://i.imgur.com/VlTphCZ.gif', 0, '[""]', 'up-suc-manh-su-phu', 1);
 
 -- --------------------------------------------------------
 
@@ -181,7 +179,7 @@ CREATE TABLE `category_game` (
   `stt` int(11) NOT NULL DEFAULT 0,
   `type` varchar(250) DEFAULT NULL COMMENT 'account, random',
   `title` varchar(250) DEFAULT NULL,
-  `mota` text DEFAULT 'CHÚC QUÝ KHÁCH MỘT NGÀY MỚI VUI VẺ',
+  `mota` VARCHAR(255) DEFAULT 'CHÚC QUÝ KHÁCH MỘT NGÀY MỚI VUI VẺ',
   `img` varchar(250) DEFAULT NULL,
   `slug` text DEFAULT NULL,
   `num_all` bigint(20) DEFAULT 0,
@@ -195,8 +193,8 @@ CREATE TABLE `category_game` (
 --
 
 INSERT INTO `category_game` (`id`, `stt`, `type`, `title`, `mota`, `img`, `slug`, `num_all`, `num_sell`, `author`, `status`) VALUES
-(1, 2, 'account', 'SƠ SINH CHỈ SỐ NGON (GIẢM GIÁ 15%)', '<p style=\"margin-left:0; margin-right:0; text-align:center\"><strong><span style=\"background-color:#ffffff; color:#5c6873; font-family:helvetica,arial,sans-serif; font-size:22px\"><span style=\"color:#e74c3c\"><strong>NICK9S.COM</strong>\r\n                                </span>\r\n                                </span>\r\n                                <br />\r\n                                <span style=\"background-color:#ffffff; color:#5c6873; font-family:helvetica,arial,sans-serif; font-size:22px\"><span style=\"color:#e74c3c\"><strong>Cập Nhật Nhiều Nick Ngon Cực Rẻ</strong></span></span>\r\n                                </strong>\r\n                            </p>\r\n\r\n                            <p style=\"margin-left:0; margin-right:0; text-align:center\"><u><span style=\"color:#e74c3c\"><strong><em><span style=\"background-color:#ffffff\">NẠP QUA ATM / VÍ => TỰ ĐỘNG CỘNG THÊM 15%</span></em></strong></span></u>\r\n                            </p>\r\n\r\n                            <p style=\"margin-left:0; margin-right:0; text-align:center\"><strong><span style=\"color:#e25041\">LƯU Ý : NAP THẺ KHÔNG BỊ TRỪ CHIẾT KHẤU 100K NHẬN ĐƯỢC 100K</span></strong>\r\n                            </p>\r\n\r\n                            <p style=\"margin-left:0; margin-right:0; text-align:center\"><span style=\"color:#e74c3c\"><strong><span style=\"font-family:helvetica,arial,sans-serif; font-size:22px\"><strong><span style=\"background-color:#f1c40f\">( KHI MUA NICK XONG YÊU CẦU KHÁCH ĐỔI LUÔN MẬT KHẨU )</span>\r\n                                </strong>\r\n                                </span>\r\n                                </strong>\r\n                                </span>\r\n                            </p>\r\n\r\n                            <div style=\"text-align:center\"><span style=\"font-family:Arial, Helvetica, sans-serif\"><strong><em><span style=\"background-color:#ffffff\">ĐỂ BẢO VỆ TÀI KHOẢN CỦA MÌNH.</span>\r\n                                </em>\r\n                                </strong>\r\n                                </span>\r\n                            </div>\r\n\r\n                            <div style=\"text-align:center\"><span style=\"font-family:Arial, Helvetica, sans-serif\"><strong><em><span style=\"background-color:#ffffff\">SHOP ĐÃ CÀI CHỨC NĂNG CHECK MẬT KHẨU ĐÚNG SAI</span>\r\n                                </em>\r\n                                </strong>\r\n                                </span>\r\n                            </div>\r\n\r\n                            <div style=\"text-align:center\"><span style=\"font-family:Arial, Helvetica, sans-serif\"><strong><em><span style=\"background-color:#ffffff\">NẾU NHƯ NICK SAI KHÁCH MUA SẼ KHÔNG BỊ TRỪ TIỀN</span>\r\n                                </em>\r\n                                </strong>\r\n                                </span>\r\n                            </div>\r\n\r\n                            <div style=\"text-align:center\"><span style=\"font-family:Arial, Helvetica, sans-serif\"><strong><em><span style=\"background-color:#ffffff\">LƯU Ý : Nếu có lỗi khi mua nick hãy báo với shop ngay lập tức</span>\r\n                                </em>\r\n                                </strong>\r\n                                </span>\r\n                            </div>\r\n\r\n                            <div style=\"text-align:center\"><span style=\"font-family:Arial, Helvetica, sans-serif\"><strong><em><span style=\"background-color:#ffffff\">quá 5p shop sẽ không chịu trách nhiệm về nick của bạn </span>\r\n                                </em>\r\n                                </strong>\r\n                                </span>\r\n                            </div>\r\n\r\n                            <div style=\"text-align:center\"><u><em><span style=\"color:#2ecc71\"><strong>TẤT CẢ NICK TRÊN SHOP ĐỀU LÀ ĐĂNG KÝ ẢO VÀ ĐỔI ĐƯỢC MẬT KHẨU </strong></span></em></u>\r\n                            </div>', 'https://i.imgur.com/DaefDXX.gif', 'sosinhchisongongiamgia15', 2, 2, 'Máy chủ\r\nHành tinh\r\nBông tai\r\nĐăng ký', 1),
-(2, 1, 'random', 'NICK RANDOM 29K ( TRÚNG 100% NICK CAO NHẤT 50 TỈ )', '<p style=\"margin-left:0; margin-right:0; text-align:center\"><strong><span style=\"background-color:#ffffff; color:#5c6873; font-family:helvetica,arial,sans-serif; font-size:22px\"><span style=\"color:#e74c3c\"><strong>NICK9S.COM</strong>\r\n                                </span>\r\n                                </span>\r\n                                <br>\r\n                                <span style=\"background-color:#ffffff; color:#5c6873; font-family:helvetica,arial,sans-serif; font-size:22px\"><span style=\"color:#e74c3c\"><strong>Cập Nhật Nhiều Nick Ngon Cực Rẻ</strong></span></span>\r\n                                </strong>\r\n                            </p>\r\n\r\n                            <p style=\"margin-left:0; margin-right:0; text-align:center\"><u><span style=\"color:#e74c3c\"><strong><em><span style=\"background-color:#ffffff\">NẠP QUA ATM / VÍ => TỰ ĐỘNG CỘNG THÊM 15%</span></em></strong></span></u>\r\n                            </p>\r\n\r\n                            <p style=\"margin-left:0; margin-right:0; text-align:center\"><strong><span style=\"color:#e25041\">LƯU Ý : NAP THẺ KHÔNG BỊ TRỪ CHIẾT KHẤU 100K NHẬN ĐƯỢC 100K</span></strong>\r\n                            </p>\r\n\r\n                            <p style=\"margin-left:0; margin-right:0; text-align:center\"><span style=\"color:#e74c3c\"><strong><span style=\"font-family:helvetica,arial,sans-serif; font-size:22px\"><strong><span style=\"background-color:#f1c40f\">( KHI MUA NICK XONG YÊU CẦU KHÁCH ĐỔI LUÔN MẬT KHẨU )</span>\r\n                                </strong>\r\n                                </span>\r\n                                </strong>\r\n                                </span>\r\n                            </p>\r\n\r\n                            <div style=\"text-align:center\"><span style=\"font-family:Arial, Helvetica, sans-serif\"><strong><em><span style=\"background-color:#ffffff\">ĐỂ BẢO VỆ TÀI KHOẢN CỦA MÌNH.</span>\r\n                                </em>\r\n                                </strong>\r\n                                </span>\r\n                            </div>\r\n\r\n                            <div style=\"text-align:center\"><span style=\"font-family:Arial, Helvetica, sans-serif\"><strong><em><span style=\"background-color:#ffffff\">SHOP ĐÃ CÀI CHỨC NĂNG CHECK MẬT KHẨU ĐÚNG SAI</span>\r\n                                </em>\r\n                                </strong>\r\n                                </span>\r\n                            </div>\r\n\r\n                            <div style=\"text-align:center\"><span style=\"font-family:Arial, Helvetica, sans-serif\"><strong><em><span style=\"background-color:#ffffff\">NẾU NHƯ NICK SAI KHÁCH MUA SẼ KHÔNG BỊ TRỪ TIỀN</span>\r\n                                </em>\r\n                                </strong>\r\n                                </span>\r\n                            </div>\r\n\r\n                            <div style=\"text-align:center\"><span style=\"font-family:Arial, Helvetica, sans-serif\"><strong><em><span style=\"background-color:#ffffff\">LƯU Ý : Nếu có lỗi khi mua nick hãy báo với shop ngay lập tức</span>\r\n                                </em>\r\n                                </strong>\r\n                                </span>\r\n                            </div>\r\n\r\n                            <div style=\"text-align:center\"><span style=\"font-family:Arial, Helvetica, sans-serif\"><strong><em><span style=\"background-color:#ffffff\">quá 5p shop sẽ không chịu trách nhiệm về nick của bạn</span></em></strong></span></div>\r\n\r\n                            <div style=\"text-align:center\"><u><em><span style=\"color:#2ecc71\"><strong>TẤT CẢ NICK TRÊN SHOP ĐỀU LÀ ĐĂNG KÝ ẢO VÀ ĐỔI ĐƯỢC MẬT KHẨU </strong></span></em></u>\r\n                            </div>', 'https://i.imgur.com/jhiEJYk.gif', 'nickrandom29ktrung100nickcaonhat50ti', 1, 0, 'Máy chủ\r\nHành tinh\r\nBông tai\r\nĐăng ký', 1),
+(1, 2, 'account', 'SƠ SINH CHỈ SỐ NGON (GIẢM GIÁ 15%)', '<p style="margin-left:0; margin-right:0; text-align:center"><strong><span style="background-color:#ffffff; color:#5c6873; font-family:helvetica,arial,sans-serif; font-size:22px"><span style="color:#e74c3c"><strong>NICK9S.COM</strong>\r\n                                </span>\r\n                                </span>\r\n                                <br />\r\n                                <span style="background-color:#ffffff; color:#5c6873; font-family:helvetica,arial,sans-serif; font-size:22px"><span style="color:#e74c3c"><strong>Cập Nhật Nhiều Nick Ngon Cực Rẻ</strong></span></span>\r\n                                </strong>\r\n                            </p>\r\n\r\n                            <p style="margin-left:0; margin-right:0; text-align:center"><u><span style="color:#e74c3c"><strong><em><span style="background-color:#ffffff">NẠP QUA ATM / VÍ => TỰ ĐỘNG CỘNG THÊM 15%</span></em></strong></span></u>\r\n                            </p>\r\n\r\n                            <p style="margin-left:0; margin-right:0; text-align:center"><strong><span style="color:#e25041">LƯU Ý : NAP THẺ KHÔNG BỊ TRỪ CHIẾT KHẤU 100K NHẬN ĐƯỢC 100K</span></strong>\r\n                            </p>\r\n\r\n                            <p style="margin-left:0; margin-right:0; text-align:center"><span style="color:#e74c3c"><strong><span style="font-family:helvetica,arial,sans-serif; font-size:22px"><strong><span style="background-color:#f1c40f">( KHI MUA NICK XONG YÊU CẦU KHÁCH ĐỔI LUÔN MẬT KHẨU )</span>\r\n                                </strong>\r\n                                </span>\r\n                                </strong>\r\n                                </span>\r\n                            </p>\r\n\r\n                            <div style="text-align:center"><span style="font-family:Arial, Helvetica, sans-serif"><strong><em><span style="background-color:#ffffff">ĐỂ BẢO VỆ TÀI KHOẢN CỦA MÌNH.</span>\r\n                                </em>\r\n                                </strong>\r\n                                </span>\r\n                            </div>\r\n\r\n                            <div style="text-align:center"><span style="font-family:Arial, Helvetica, sans-serif"><strong><em><span style="background-color:#ffffff">SHOP ĐÃ CÀI CHỨC NĂNG CHECK MẬT KHẨU ĐÚNG SAI</span>\r\n                                </em>\r\n                                </strong>\r\n                                </span>\r\n                            </div>\r\n\r\n                            <div style="text-align:center"><span style="font-family:Arial, Helvetica, sans-serif"><strong><em><span style="background-color:#ffffff">NẾU NHƯ NICK SAI KHÁCH MUA SẼ KHÔNG BỊ TRỪ TIỀN</span>\r\n                                </em>\r\n                                </strong>\r\n                                </span>\r\n                            </div>\r\n\r\n                            <div style="text-align:center"><span style="font-family:Arial, Helvetica, sans-serif"><strong><em><span style="background-color:#ffffff">LƯU Ý : Nếu có lỗi khi mua nick hãy báo với shop ngay lập tức</span>\r\n                                </em>\r\n                                </strong>\r\n                                </span>\r\n                            </div>\r\n\r\n                            <div style="text-align:center"><span style="font-family:Arial, Helvetica, sans-serif"><strong><em><span style="background-color:#ffffff">quá 5p shop sẽ không chịu trách nhiệm về nick của bạn </span>\r\n                                </em>\r\n                                </strong>\r\n                                </span>\r\n                            </div>\r\n\r\n                            <div style="text-align:center"><u><em><span style="color:#2ecc71"><strong>TẤT CẢ NICK TRÊN SHOP ĐỀU LÀ ĐĂNG KÝ ẢO VÀ ĐỔI ĐƯỢC MẬT KHẨU </strong></span></em></u>\r\n                            </div>', 'https://i.imgur.com/DaefDXX.gif', 'sosinhchisongongiamgia15', 2, 2, 'Máy chủ\r\nHành tinh\r\nBông tai\r\nĐăng ký', 1),
+(2, 1, 'random', 'NICK RANDOM 29K ( TRÚNG 100% NICK CAO NHẤT 50 TỈ )', '<p style="margin-left:0; margin-right:0; text-align:center"><strong><span style="background-color:#ffffff; color:#5c6873; font-family:helvetica,arial,sans-serif; font-size:22px"><span style="color:#e74c3c"><strong>NICK9S.COM</strong>\r\n                                </span>\r\n                                </span>\r\n                                <br>\r\n                                <span style="background-color:#ffffff; color:#5c6873; font-family:helvetica,arial,sans-serif; font-size:22px"><span style="color:#e74c3c"><strong>Cập Nhật Nhiều Nick Ngon Cực Rẻ</strong></span></span>\r\n                                </strong>\r\n                            </p>\r\n\r\n                            <p style="margin-left:0; margin-right:0; text-align:center"><u><span style="color:#e74c3c"><strong><em><span style="background-color:#ffffff">NẠP QUA ATM / VÍ => TỰ ĐỘNG CỘNG THÊM 15%</span></em></strong></span></u>\r\n                            </p>\r\n\r\n                            <p style="margin-left:0; margin-right:0; text-align:center"><strong><span style="color:#e25041">LƯU Ý : NAP THẺ KHÔNG BỊ TRỪ CHIẾT KHẤU 100K NHẬN ĐƯỢC 100K</span></strong>\r\n                            </p>\r\n\r\n                            <p style="margin-left:0; margin-right:0; text-align:center"><span style="color:#e74c3c"><strong><span style="font-family:helvetica,arial,sans-serif; font-size:22px"><strong><span style="background-color:#f1c40f">( KHI MUA NICK XONG YÊU CẦU KHÁCH ĐỔI LUÔN MẬT KHẨU )</span>\r\n                                </strong>\r\n                                </span>\r\n                                </strong>\r\n                                </span>\r\n                            </p>\r\n\r\n                            <div style="text-align:center"><span style="font-family:Arial, Helvetica, sans-serif"><strong><em><span style="background-color:#ffffff">ĐỂ BẢO VỆ TÀI KHOẢN CỦA MÌNH.</span>\r\n                                </em>\r\n                                </strong>\r\n                                </span>\r\n                            </div>\r\n\r\n                            <div style="text-align:center"><span style="font-family:Arial, Helvetica, sans-serif"><strong><em><span style="background-color:#ffffff">SHOP ĐÃ CÀI CHỨC NĂNG CHECK MẬT KHẨU ĐÚNG SAI</span>\r\n                                </em>\r\n                                </strong>\r\n                                </span>\r\n                            </div>\r\n\r\n                            <div style="text-align:center"><span style="font-family:Arial, Helvetica, sans-serif"><strong><em><span style="background-color:#ffffff">NẾU NHƯ NICK SAI KHÁCH MUA SẼ KHÔNG BỊ TRỪ TIỀN</span>\r\n                                </em>\r\n                                </strong>\r\n                                </span>\r\n                            </div>\r\n\r\n                            <div style="text-align:center"><span style="font-family:Arial, Helvetica, sans-serif"><strong><em><span style="background-color:#ffffff">LƯU Ý : Nếu có lỗi khi mua nick hãy báo với shop ngay lập tức</span>\r\n                                </em>\r\n                                </strong>\r\n                                </span>\r\n                            </div>\r\n\r\n                            <div style="text-align:center"><span style="font-family:Arial, Helvetica, sans-serif"><strong><em><span style="background-color:#ffffff">quá 5p shop sẽ không chịu trách nhiệm về nick của bạn</span></em></strong></span></div>\r\n\r\n                            <div style="text-align:center"><u><em><span style="color:#2ecc71"><strong>TẤT CẢ NICK TRÊN SHOP ĐỀU LÀ ĐĂNG KÝ ẢO VÀ ĐỔI ĐƯỢC MẬT KHẨU </strong></span></em></u>\r\n                            </div>', 'https://i.imgur.com/jhiEJYk.gif', 'nickrandom29ktrung100nickcaonhat50ti', 1, 0, 'Máy chủ\r\nHành tinh\r\nBông tai\r\nĐăng ký', 1),
 (13, 0, 'account', 'BÁN NICK NGỌC RỒNG GIÁ SIÊU RẺ', 'MÔ TẢ DỊCH VỤ', 'https://i.imgur.com/jhiEJYk.gif', 'ban-nick-ngoc-rong-gia-sieu-re', 0, 0, '', 1),
 (14, 0, 'account', 'NICK WIN DOANH TRẠI ( GIÁ TỪ 16K )', 'MÔ TẢ DỊCH VỤ', 'https://i.imgur.com/oP25h3I.gif', 'nick-win-doanh-trai--gia-tu-k-', 0, 0, '', 1),
 (15, 0, 'account', 'BÁN NICK LIÊN QUÂN', 'MÔ TẢ DỊCH VỤ', 'https://i.imgur.com/XA0vuBs.jpg', 'ban-nick-lien-quan', 0, 0, '', 1),
@@ -218,7 +216,7 @@ CREATE TABLE `coupon` (
   `giam` int(11) DEFAULT 0,
   `luotdung` bigint(20) NOT NULL DEFAULT 0,
   `conlai` int(11) DEFAULT 1,
-  `apply` text NOT NULL DEFAULT 'account' COMMENT 'Áp dụng cho dịch vụ nào',
+  `apply` VARCHAR(255) NOT NULL DEFAULT 'account' COMMENT 'Áp dụng cho dịch vụ nào',
   `type` int(11) NOT NULL DEFAULT 1 COMMENT '1: 1 người xài nhiều lần, 0: 1 người xài 1 lần',
   `thoigian` datetime DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
@@ -548,7 +546,7 @@ CREATE TABLE `mini_game_gift` (
 --
 
 INSERT INTO `mini_game_gift` (`id`, `id_vongquay`, `o_1`, `o_2`, `o_3`, `o_4`, `o_5`, `o_6`, `o_7`, `o_8`) VALUES
-(1, 1, '{\"text\":\"Ch\\u00fac m\\u1eebng b\\u1ea1n nh\\u1eadn \\u0111\\u01b0\\u1ee3c 1.000 ng\\u1ecdc xanh\",\"iteam\":\"1000\",\"tyle\":\"0\",\"hinhthuc\":\"ngoc\"}', '{\"text\":\"Ch\\u00fac m\\u1eebng b\\u1ea1n nh\\u1eadn \\u0111\\u01b0\\u1ee3c 5.000 ng\\u1ecdc xanh\",\"iteam\":\"5000\",\"tyle\":\"0\",\"hinhthuc\":\"ngoc\"}', '{\"text\":\"Ch\\u00fac m\\u1eebng b\\u1ea1n nh\\u1eadn \\u0111\\u01b0\\u1ee3c 10.000 ng\\u1ecdc xanh\",\"iteam\":\"10000\",\"tyle\":\"100\",\"hinhthuc\":\"ngoc\"}', '{\"text\":\"Nh\\u1eadn \\u0111\\u01b0\\u1ee3c 1 nick may m\\u1eafn\",\"iteam\":\"0\",\"tyle\":\"0\",\"hinhthuc\":\"ngoc\"}', '{\"text\":\"Ch\\u00fac m\\u1eebng b\\u1ea1n nh\\u1eadn \\u0111\\u01b0\\u1ee3c 200K ti\\u1ec1n shop\",\"iteam\":\"200000\",\"tyle\":\"0\",\"hinhthuc\":\"tien\"}', '{\"text\":\"Ch\\u00fac m\\u1eebng b\\u1ea1n nh\\u1eadn \\u0111\\u01b0\\u1ee3c 100K v\\u00e0ng\",\"iteam\":\"100000\",\"tyle\":\"0\",\"hinhthuc\":\"vang\"}', '{\"text\":\"Ch\\u00fac m\\u1eebng b\\u1ea1n nh\\u1eadn \\u0111\\u01b0\\u1ee3c 500K v\\u00e0ng\",\"iteam\":\"500000\",\"tyle\":\"0\",\"hinhthuc\":\"vang\"}', '{\"text\":\"Ch\\u00fac m\\u1eebng b\\u1ea1n nh\\u1eadn \\u0111\\u01b0\\u1ee3c 2.000 ng\\u1ecdc xanh\",\"iteam\":\"2000\",\"tyle\":\"0\",\"hinhthuc\":\"ngoc\"}');
+(1, 1, '{"text":"Chúc mừng bạn nhận được 1.000 ngọc xanh","iteam":"1000","tyle":"0","hinhthuc":"ngoc"}', '{"text":"Chúc mừng bạn nhận được 5.000 ngọc xanh","iteam":"5000","tyle":"0","hinhthuc":"ngoc"}', '{"text":"Chúc mừng bạn nhận được 10.000 ngọc xanh","iteam":"10000","tyle":"100","hinhthuc":"ngoc"}', '{"text":"Nhận được 1 nick may mắn","iteam":"0","tyle":"0","hinhthuc":"ngoc"}', '{"text":"Chúc mừng bạn nhận được 200K tiền shop","iteam":"200000","tyle":"0","hinhthuc":"tien"}', '{"text":"Chúc mừng bạn nhận được 100K vàng","iteam":"100000","tyle":"0","hinhthuc":"vang"}', '{"text":"Chúc mừng bạn nhận được 500K vàng","iteam":"500000","tyle":"0","hinhthuc":"vang"}', '{"text":"Chúc mừng bạn nhận được 2.000 ngọc xanh","iteam":"2000","tyle":"0","hinhthuc":"ngoc"}');
 
 -- --------------------------------------------------------
 
@@ -573,7 +571,7 @@ CREATE TABLE `napatm` (
 INSERT INTO `napatm` (`id`, `username`, `hinhthuc`, `magd`, `sotien`, `ndnaptien`, `thoigian`) VALUES
 (1, '123', '123', '21323', '200', '23', '2024-03-04 13:05:38'),
 (3, 'tuanori', 'MOMO', '54313093495', '500000.45', 'NAP5', '2024-03-06 12:55:19'),
-(4, 'tuanori', 'MBBANK', 'FT24066802365250', '57500', 'CUSTOMER NAP5 FT24066194176960 - Ma giao  dich/ Trace280395 Trace 280395', '2024-03-06 13:35:45');
+(4, 'tuanori', 'MBBANK', 'FT24066802365250', '57500', 'CUSTOMER NAP5 FT24066194176960 - Ma giao  dich/ Trace280395 Trace 280395', '2024-03-06 13:35:45');
 
 -- --------------------------------------------------------
 
@@ -648,7 +646,7 @@ INSERT INTO `options` (`id`, `key`, `value`) VALUES
 (5, 'email', '3'),
 (6, 'pass_email', '4'),
 (7, 'noidung_naptien', 'NAP'),
-(8, 'thongbao', '<p>\r\n    <p style=\"margin-left:0; margin-right:0; text-align:center\"><strong><span style=\"color:#e25041\">TOP NẠP THẺ THÁNG 7</span></strong>\r\n    </p>\r\n\r\n    <p style=\"margin-left:0; margin-right:0; text-align:center\"><strong><span style=\"color:#61bd6d\">TOP 1: NHẬN NICK 1TR VNĐ + 3K NGỌC</span></strong>\r\n    </p>\r\n\r\n    <p style=\"margin-left:0; margin-right:0; text-align:center\"><span style=\"color:#61bd6d\"><strong>TOP 2: NHẬN NICK 800K + 1K NGỌC</strong></span>\r\n    </p>\r\n\r\n    <p style=\"margin-left:0; margin-right:0; text-align:center\"><strong><span style=\"color:#61bd6d\">TOP 3: NHẬN NICK 500K + 500TR VÀNG</span></strong>\r\n    </p>\r\n\r\n    <p style=\"margin-left:0; margin-right:0; text-align:center\"><strong><span style=\"color:#61bd6d\"> ĐÃ TRAO GIẢI THƯỞNG TOP THÁNG 7</span></strong>\r\n    </p>\r\n\r\n    <p style=\"margin-left:0; margin-right:0; text-align:center\"><strong><span style=\"color:#61bd6d\">VÀO00h30 </span></strong><strong><span style=\"color:#61bd6d\">NGÀY 1/8/2022</span></strong>\r\n    </p>\r\n</p>'),
+(8, 'thongbao', '<p>\r\n    <p style="margin-left:0; margin-right:0; text-align:center"><strong><span style="color:#e25041">TOP NẠP THẺ THÁNG 7</span></strong>\r\n    </p>\r\n\r\n    <p style="margin-left:0; margin-right:0; text-align:center"><strong><span style="color:#61bd6d">TOP 1: NHẬN NICK 1TR VNĐ + 3K NGỌC</span></strong>\r\n    </p>\r\n\r\n    <p style="margin-left:0; margin-right:0; text-align:center"><span style="color:#61bd6d"><strong>TOP 2: NHẬN NICK 800K + 1K NGỌC</strong></span>\r\n    </p>\r\n\r\n    <p style="margin-left:0; margin-right:0; text-align:center"><strong><span style="color:#61bd6d">TOP 3: NHẬN NICK 500K + 500TR VÀNG</span></strong>\r\n    </p>\r\n\r\n    <p style="margin-left:0; margin-right:0; text-align:center"><strong><span style="color:#61bd6d"> ĐÃ TRAO GIẢI THƯỞNG TOP THÁNG 7</span></strong>\r\n    </p>\r\n\r\n    <p style="margin-left:0; margin-right:0; text-align:center"><strong><span style="color:#61bd6d">VÀO00h30 </span></strong><strong><span style="color:#61bd6d">NGÀY 1/8/2022</span></strong>\r\n    </p>\r\n</p>'),
 (9, 'anhbia', 'https://i.imgur.com/74qInK4.jpg'),
 (10, 'banner1', 'https://i.imgur.com/qawacxd.jpeg'),
 (11, 'banner2', 'https://i.imgur.com/gSZLZAB.png'),
@@ -657,14 +655,14 @@ INSERT INTO `options` (`id`, `key`, `value`) VALUES
 (14, 'partner_id', '12'),
 (15, 'partner_key', '2123'),
 (16, 'ckcard', '30'),
-(17, 'token_momo', '    34'),
-(18, 'token_bank', '  2'),
-(19, 'stk_bank', '  3'),
-(21, 'mk_bank', '  4'),
+(17, 'token_momo', '    34'),
+(18, 'token_bank', '  2'),
+(19, 'stk_bank', '  3'),
+(21, 'mk_bank', '  4'),
 (22, 'loaibank', 'MBBANK'),
 (23, 'favicon', 'https://i.imgur.com/5CjMnTV.png'),
-(24, 'stk_bank', '  3'),
-(25, 'mk_bank', '  4'),
+(24, 'stk_bank', '  3'),
+(25, 'mk_bank', '  4'),
 (26, 'status_napmomo', 'ON'),
 (27, 'status_napbank', 'ON'),
 (28, 'status_card', '1'),
@@ -673,18 +671,18 @@ INSERT INTO `options` (`id`, `key`, `value`) VALUES
 (31, 'status_tele', '0'),
 (32, 'id_tele', '1'),
 (33, 'key_tele', '2'),
-(35, 'phanthuong_top', '<p style=\"margin-right: 0px; margin-bottom: 10px; margin-left: 0px; text-align: center;\"><font color=\"#61bd6d\"><b>Đã trao thưởng vào lúc ...</b></font></p>'),
+(35, 'phanthuong_top', '<p style="margin-right: 0px; margin-bottom: 10px; margin-left: 0px; text-align: center;"><font color="#61bd6d"><b>Đã trao thưởng vào lúc ...</b></font></p>'),
 (36, 'status_banvang', '1'),
 (37, 'title_banvang', 'Bán vàng giá rẻ x10'),
 (38, 'img_banvang', 'https://i.imgur.com/jERo8WY.gif'),
 (39, 'mota_banvang', NULL),
-(40, 'server_banvang', '{\"maychu\":[\"1\",\"2\",\"3\",\"4\",\"5\",\"6\",\"7\",\"8\",\"9\"],\"vitri\":[\"Làng KKR K12\",\"Làng KKR K12\",\"Làng KKR K12\",\"Làng KKR K12\",\"Làng KKR K12\",\"Làng KKR K12\",\"Làng KKR K12\",\"Làng KKR K12\",\"Làng KKR K12\"],\"tennv\":[\"phamhoangtuan1\",\"phamhoangtuan2\",\"phamhoangtuan2\",\"phamhoangtuan1\",\"phamhoangtuan2\",\"phamhoangtuan2\",\"phamhoangtuan1\",\"phamhoangtuan2\",\"phamhoangtuan2\"],\"status\":[\"1\",\"1\",\"1\",\"0\",\"1\",\"1\",\"1\",\"1\",\"1\"],\"heso\":[\"8000\",\"20000\",\"20000\",\"8000\",\"20000\",\"20000\",\"8000\",\"20000\",\"2000\"]}'),
+(40, 'server_banvang', '{"maychu":["1","2","3","4","5","6","7","8","9"],"vitri":["Làng KKR K12","Làng KKR K12","Làng KKR K12","Làng KKR K12","Làng KKR K12","Làng KKR K12","Làng KKR K12","Làng KKR K12","Làng KKR K12"],"tennv":["phamhoangtuan1","phamhoangtuan2","phamhoangtuan2","phamhoangtuan1","phamhoangtuan2","phamhoangtuan2","phamhoangtuan1","phamhoangtuan2","phamhoangtuan2"],"status":["1","1","1","0","1","1","1","1","1"],"heso":["8000","20000","20000","8000","20000","20000","8000","20000","2000"]}'),
 (41, 'max_banvang', '1000000000000'),
 (42, 'min_banvang', '200'),
 (44, 'title_banngoc', 'BÁN NGỌC TỰ ĐỘNG X10'),
 (45, 'img_banngoc', 'https://i.imgur.com/JbSqsex.gif'),
 (46, 'mota_banngoc', NULL),
-(47, 'server_banngoc', '{\"maychu\":[\"1\",\"2\",\"3\",\"4\",\"5\",\"6\"],\"status\":[\"1\",\"1\",\"1\",\"1\",\"1\",\"0\"],\"heso\":[\"12\",\"12\",\"12\",\"12\",\"12\",\"12\"]}'),
+(47, 'server_banngoc', '{"maychu":["1","2","3","4","5","6"],"status":["1","1","1","1","1","0"],"heso":["12","12","12","12","12","12"]}'),
 (48, 'max_banngoc', '100000000'),
 (49, 'min_banngoc', '500000'),
 (51, 'status_banngoc', '1'),
@@ -725,7 +723,7 @@ CREATE TABLE `select_category` (
 --
 
 INSERT INTO `select_category` (`id`, `category_game`, `author`) VALUES
-(1, 1, '{\"nameselect\":[\"Máy chủ\",\"Hành Tinh\",\"Bông Tai\",\"Đăng ký\"],\"maychu\":[\"1 Sao\",\"2 Sao\",\"3 Sao\",\"4 Sao\",\"5 Sao\",\"6 Sao\",\"7 Sao\",\"8 Sao\",\"9 Sao\",\"10 Sao\"],\"hanhtinh\":[\"Trái Đất\",\"XayDa\",\"Namếc\"],\"bongtai\":[\"Có\",\"Không\"],\"dangky\":[\"Ảo\",\"Gmail xóa vĩnh viễn\",\"Gmail trắng thông tin\",\"Gmail full thông tin\"]}');
+(1, 1, '{"nameselect":["Máy chủ","Hành Tinh","Bông Tai","Đăng ký"],"maychu":["1 Sao","2 Sao","3 Sao","4 Sao","5 Sao","6 Sao","7 Sao","8 Sao","9 Sao","10 Sao"],"hanhtinh":["Trái Đất","XayDa","Namếc"],"bongtai":["Có","Không"],"dangky":["Ảo","Gmail xóa vĩnh viễn","Gmail trắng thông tin","Gmail full thông tin"]}');
 
 -- --------------------------------------------------------
 
@@ -1038,7 +1036,7 @@ ALTER TABLE `options`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=71;
 
 --
--- AUTO_INCREMENT cho bảng `select_category`
+-- AUTO_INCREMENT cho bảng `selecdemo_codet_category`
 --
 ALTER TABLE `select_category`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;

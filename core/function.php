@@ -5,7 +5,7 @@ $TUANORI = new TUANORI;
 // $site_pass_momo     = $TUANORI->site('pass_email');
 // require_once(__DIR__.'/../lib/Pusher.php');
 /*MÃ NGUỒN NÀY ĐƯỢC PHÁT TRIỂN BỞI TUANORI - ZALO: 0812665001*/
-
+$base_url = 'http://' . $_SERVER['SERVER_NAME'] . '/'; // Thay url web bạn
 function sendCSM($mail_nhan,$ten_nhan,$chu_de,$noi_dung,$bcc)
 {
     // return true;

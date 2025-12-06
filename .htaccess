@@ -1,16 +1,13 @@
 RewriteEngine On
-# TUANORIJSC : BẮT ĐẦU CHUYỂN HƯỚNG
-RewriteEngine On
-RewriteCond %{HTTPS} off
-RewriteRule (.*) https://%{HTTP_HOST}%{REQUEST_URI} [R,L]
-# TUANORIJSC : KẾT THÚC CHUYỂN HƯỚNG
+
 RewriteRule ^login$ pages/client/Login.php [L]
 RewriteRule ^register$ pages/client/Register.php [L]
 RewriteRule ^login$ pages/client/Login.php [L]
 RewriteRule ^LoginAdmin$ pages/client/LoginAdmin.php [L]
 
 RewriteRule ^logout$ pages/client/Logout.php [L]
-#game
+
+
 RewriteRule ^nick/([A-Za-z0-9-_]+)$ pages/client/ListAcc.php?slug=$1 [L]
 RewriteRule ^chuyenmuc.html$ pages/client/ListAcc.php [L]
 RewriteRule ^sanpham/([A-Za-z0-9-_]+).html$ pages/client/ShowAcc.php?id=$1 [L]
@@ -150,11 +147,3 @@ RewriteRule ^Partner/Partner$ pages/partner/Partner.php [L]
 RewriteRule ^Partner/HisMuaAcc$ pages/partner/HisMuaAcc.php [L]
 RewriteRule ^Partner/DonDichVuMe$ pages/partner/DonDichVuMe.php [L]
 RewriteRule ^Partner/Ruttien$ pages/partner/Ruttien.php [L]
-
-
-
-<Files 403.shtml>
-order allow,deny
-allow from all
-</Files>
-

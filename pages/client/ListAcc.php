@@ -26,8 +26,8 @@
     }
     if($tt['type'] == 'account') { 
         /*XỬ LÝ MỤC HIỆN THÔNG TIN ĐỂ TÌM KIẾM*/
-        $show = $TUANORI->get_row(" SELECT * FROM `select_category` WHERE `category_game` = '".$tt['id']."'")['author'];
-        $show = json_decode($show, true);
+        $show = $TUANORI->get_row(" SELECT * FROM `select_category` WHERE `category_game` = '".$tt['id']."'")['author'] ?? '';
+        $show = json_decode($show ?? "[]", true);
     }
 
     ?>
